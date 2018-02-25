@@ -7,6 +7,8 @@ public class Typewriter : MonoBehaviour
     private string fullText;
     private string sourceText;
 
+    private bool isAnimating;
+
     [Range(0.001f, 100.0f)]
     public float frequency = 1.0f;
 
@@ -21,6 +23,7 @@ public class Typewriter : MonoBehaviour
         fullText = Text.text;
 
         float time = 1.0f / frequency;
+        isAnimating = false;
 
         StartCoroutine(TypewriterEffect(time));
     }
@@ -39,7 +42,13 @@ public class Typewriter : MonoBehaviour
         for (int i = 0; i <= size; ++i)
         {
             Text.text = fullText.Substring(0, i);
+            isAnimating = true;
             yield return new WaitForSeconds(waitTime);
         }
+
+        isAnimating = false;
     }
+
+    public bool IsAnimating()
+    { return isAnimating; }
 }
